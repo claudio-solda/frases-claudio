@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#241a12">
 <link rel="icon" href="icon-512.png">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Caveat:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -290,6 +291,7 @@
     <h2>Nova frase</h2>
     <label>Frase</label>
     <textarea id="inputFrase" placeholder="Cole ou digite a frase..."></textarea>
+    <button type="button" class="btn ghost" style="margin-top:8px; flex:none; padding:9px 14px; font-size:.85rem;" onclick="colarDaAreaTransferencia()">📋 Colar da área de transferência</button>
 
     <label>Categoria</label>
     <div class="catrow" id="catrow"></div>
@@ -433,6 +435,30 @@ function salvarFrase(){
   renderLista();
 }
 
+async function colarDaAreaTransferencia(){
+  try{
+    const texto = await navigator.clipboard.readText();
+    if(texto){
+      document.getElementById('inputFrase').value = texto.trim();
+    } else {
+      alert('Área de transferência vazia.');
+    }
+  }catch(e){
+    alert('Não consegui acessar a área de transferência. Cole manualmente (segure e escolha "Colar").');
+  }
+}
+
+function receberFraseCompartilhada(){
+  const params = new URLSearchParams(window.location.search);
+  const texto = params.get('text') || params.get('title') || params.get('url');
+  if(texto){
+    abrirModal();
+    document.getElementById('inputFrase').value = texto.trim();
+    // limpa a URL pra não reabrir de novo se recarregar
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}
+
 document.getElementById('overlay').addEventListener('click', (e)=>{
   if(e.target.id === 'overlay') fecharModal();
 });
@@ -440,6 +466,7 @@ document.getElementById('overlay').addEventListener('click', (e)=>{
 renderCatRow();
 renderFiltros();
 renderLista();
+receberFraseCompartilhada();
 </script>
 </body>
 </html>
