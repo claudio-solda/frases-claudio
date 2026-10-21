@@ -314,6 +314,25 @@ const CATS = [
 const COLOR_MAP = {motivacional:'#b5652f', signos:'#3d4a7a', fe:'#3e6b5c', futebol:'#1e7a44'};
 
 let dados = JSON.parse(localStorage.getItem('frases-claudio') || '[]');
+// frases adicionadas por atualização do app (entram uma única vez, mesmo se você excluir depois)
+const FRASES_NOVAS = [
+  {id:'seed-escorpiao-1', categoria:'signos', texto:'Escorpião: Nada herdado. Nada dado. Tudo conquistado, mesmo que parcelado. Na raça, no esforço e na fé. Com Deus abrindo caminho onde nem existia estrada.'}
+];
+(function aplicarFrasesNovas(){
+  let aplicadas = JSON.parse(localStorage.getItem('frases-claudio-seeds') || '[]');
+  let mudou = false;
+  FRASES_NOVAS.forEach(f=>{
+    if(!aplicadas.includes(f.id)){
+      dados.push({id:Date.now()+Math.floor(Math.random()*1000), texto:f.texto, categoria:f.categoria, data:Date.now()});
+      aplicadas.push(f.id);
+      mudou = true;
+    }
+  });
+  if(mudou){
+    localStorage.setItem('frases-claudio', JSON.stringify(dados));
+    localStorage.setItem('frases-claudio-seeds', JSON.stringify(aplicadas));
+  }
+})();
 let filtroAtivo = 'todas';
 let catSelecionada = null;
 
