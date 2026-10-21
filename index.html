@@ -316,7 +316,8 @@ const COLOR_MAP = {motivacional:'#b5652f', signos:'#3d4a7a', fe:'#3e6b5c', futeb
 let dados = JSON.parse(localStorage.getItem('frases-claudio') || '[]');
 // frases adicionadas por atualização do app (entram uma única vez, mesmo se você excluir depois)
 const FRASES_NOVAS = [
-  {id:'seed-escorpiao-1', categoria:'signos', texto:'Escorpião: Nada herdado. Nada dado. Tudo conquistado, mesmo que parcelado. Na raça, no esforço e na fé. Com Deus abrindo caminho onde nem existia estrada.'}
+  {id:'seed-escorpiao-1', categoria:'signos', texto:'Escorpião: Nada herdado. Nada dado. Tudo conquistado, mesmo que parcelado. Na raça, no esforço e na fé. Com Deus abrindo caminho onde nem existia estrada.'},
+  {id:'seed-escorpiao-2', categoria:'signos', texto:'Escorpião: Dinheiro nós não temos, mas é cada plano que a gente faz que Deus tem orgulho da nossa fé.'}
 ];
 (function aplicarFrasesNovas(){
   let aplicadas = JSON.parse(localStorage.getItem('frases-claudio-seeds') || '[]');
